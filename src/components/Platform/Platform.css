@@ -1,0 +1,35 @@
+.ui.selection.dropdown .menu.noscrolling {
+  overflow: hidden;
+  max-height: none;
+}
+
+.ui.selection.dropdown .menu .buttons {
+  display: flex;
+  width: auto;
+  margin: 7px;
+}
+
+.foo {
+  width: 95px;
+}
+
+.a {
+  float:right;
+  width: 50%;
+  height: 30px;
+  padding-top: 10px;
+  font-weight: bolder;
+}
+
+.b {
+  float:left;
+  width: 50%;
+  height: 60px;
+}
+
+.c {
+  float:right;
+  width: 50%;
+  height: 30px;
+  font-weight: normal;
+}
