@@ -74,7 +74,8 @@ const PlatformCheckBox = ({ name, platform, srcUrl, onPlatformChange }) => {
 };
 
 const ControlledPlatformMatch = ({
-  open = false,
+  open = true,
+  queries,
   onChange,
   onPlatformChange,
   style
@@ -82,15 +83,20 @@ const ControlledPlatformMatch = ({
   return (
     <div style={{ margin: '18px' }}>
       <span style={{ fontWeight: 'bold' }}>App Used</span>
+      {(() => {
+        if (Object.values(queries)[0].every(query => query.value == true)) {
+          open = true;
+        }
+      })()}
       <Checkbox
         label="Include users from all apps"
-        defaultChecked
+        checked={open}
         onChange={onChange}
         style={{ marginLeft: '50px' }}
       />
       <tr>
         {(() => {
-          if (open)
+          if (open == false)
             return (
               <div>
                 <table
@@ -125,13 +131,14 @@ const control = WrappedComponent =>
     static propTypes = {
       onChange: PropTypes.func.isRequired,
       onPlatformChange: PropTypes.func.isRequired,
+      queries: PropTypes.object.isRequired,
       style: PropTypes.object.isRequired
     };
 
     constructor(props) {
       super(props);
       this.state = {
-        open: false
+        open: true
       };
     }
 
@@ -150,10 +157,11 @@ const control = WrappedComponent =>
 
     render() {
       const { open } = this.state;
-      const { style } = this.props;
+      const { style, queries } = this.props;
       return (
         <WrappedComponent
           open={open}
+          queries={queries}
           onChange={this.handleClick}
           onPlatformChange={this.handlePlatformChange}
           style={style}
@@ -194,8 +202,10 @@ const container = WrappedComponent =>
 
     render() {
       const { style } = this.props;
+      const { queries } = this.state;
       return (
         <WrappedComponent
+          queries={queries}
           onChange={this.handleChange}
           onPlatformChange={this.handlePlatformChange}
           style={style}

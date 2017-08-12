@@ -366,7 +366,7 @@ storiesOf('Query Builder', module).add('Final Query Builder', () =>
       logical_criteria: '$and',
       profile_criteria: [
         { _name: { $eq: 'Tom' }, _value: 20.5 },
-        { _name: { $ne: 'Jerry' }, _value: 30.3 },
+        { _name: { $ne: 'Jerry' } },
         { _email: { $eq: 'abc@gmail.com' }, _value: 50.6 },
         { _age: { $gt: 10, $lt: 20 } },
         {

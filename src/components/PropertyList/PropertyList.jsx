@@ -161,8 +161,10 @@ const ControlledPropertyList = ({
 
               {(() => {
                 if (idx < queries.length) {
-                  if (propName != '_age') {
-                    //query.hasOwnProperty("_value")
+                  {
+                    /* if (propName != '_age') {*/
+                  }
+                  if (query.hasOwnProperty('_value')) {
                     return (
                       <Grid>
                         <Grid.Row color="facebook">
