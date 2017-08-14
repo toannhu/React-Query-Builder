@@ -19,21 +19,21 @@ const options = [
     platform: 'Android',
     value: true,
     srcUrl:
-      'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+    'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
   },
   {
     name: 'FOX+',
     platform: 'iOS',
     value: true,
     srcUrl:
-      'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+    'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
   },
   {
     name: 'FOX+',
     platform: 'Web',
     value: true,
     srcUrl:
-      'http://sire-assets-fox.fichub.com/assets/fox/images/misc/apple-touch-icon.png?1501684406'
+    'http://sire-assets-fox.fichub.com/assets/fox/images/misc/apple-touch-icon.png?1501684406'
   }
 ];
 
@@ -84,8 +84,10 @@ const ControlledPlatformMatch = ({
     <div style={{ margin: '18px' }}>
       <span style={{ fontWeight: 'bold' }}>App Used</span>
       {(() => {
-        if (Object.values(queries)[0].every(query => query.value == true)) {
-          open = true;
+        {
+          if (Object.values(queries).every(query => query.value == true)) {
+            open = true;
+          }
         }
       })()}
       <Checkbox
@@ -143,7 +145,7 @@ const control = WrappedComponent =>
     }
 
     handleClick = (e, { checked }) => {
-      this.setState({ open: !this.state.open });
+      this.setState({ open: checked });
       this.props.onChange({ checked });
     };
 
@@ -173,6 +175,7 @@ const control = WrappedComponent =>
 const container = WrappedComponent =>
   class extends Component {
     static propTypes = {
+      queries: PropTypes.object.isRequired,
       onChange: PropTypes.func.isRequired,
       style: PropTypes.object.isRequired
     };
@@ -180,7 +183,7 @@ const container = WrappedComponent =>
     constructor(props) {
       super(props);
       this.state = {
-        queries: { platforms: options }
+        queries: this.props.queries
       };
     }
     handleChange = e => {

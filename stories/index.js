@@ -191,6 +191,31 @@ storiesOf('Event Frequency Criteria', module)
 storiesOf('Platform Match', module)
   .add('Controlled Platform Match', () =>
     <ControlledPlatformMatch
+      queries={{
+        platforms: [
+          {
+            name: 'FOX+',
+            platform: 'Android',
+            value: true,
+            srcUrl:
+              'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+          },
+          {
+            name: 'FOX+',
+            platform: 'iOS',
+            value: true,
+            srcUrl:
+              'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+          },
+          {
+            name: 'FOX+',
+            platform: 'Web',
+            value: true,
+            srcUrl:
+              'http://sire-assets-fox.fichub.com/assets/fox/images/misc/apple-touch-icon.png?1501684406'
+          }
+        ]
+      }}
       open={true}
       onChange={action('operator_changed')}
       onPlatformChange={idx => action('plaform_changed')}
@@ -199,12 +224,62 @@ storiesOf('Platform Match', module)
   )
   .add('Platform Match', () =>
     <PlatformMatch
+      queries={{
+        platforms: [
+          {
+            name: 'FOX+',
+            platform: 'Android',
+            value: true,
+            srcUrl:
+              'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+          },
+          {
+            name: 'FOX+',
+            platform: 'iOS',
+            value: true,
+            srcUrl:
+              'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+          },
+          {
+            name: 'FOX+',
+            platform: 'Web',
+            value: true,
+            srcUrl:
+              'http://sire-assets-fox.fichub.com/assets/fox/images/misc/apple-touch-icon.png?1501684406'
+          }
+        ]
+      }}
       onChange={action('Event Change')}
       style={{ margin: '10px' }}
     />
   )
   .add('Test Platform Match', () =>
     <TestPlatformMatch
+      queries={{
+        platforms: [
+          {
+            name: 'FOX+',
+            platform: 'Android',
+            value: true,
+            srcUrl:
+              'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+          },
+          {
+            name: 'FOX+',
+            platform: 'iOS',
+            value: true,
+            srcUrl:
+              'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+          },
+          {
+            name: 'FOX+',
+            platform: 'Web',
+            value: true,
+            srcUrl:
+              'http://sire-assets-fox.fichub.com/assets/fox/images/misc/apple-touch-icon.png?1501684406'
+          }
+        ]
+      }}
       onChange={action('Event Change')}
       style={{ margin: '10px' }}
     />
@@ -363,7 +438,6 @@ storiesOf('Property List', module)
 storiesOf('Query Builder', module).add('Final Query Builder', () =>
   <QueryBuilder
     queries={{
-      logical_criteria: '$and',
       profile_criteria: [
         { _name: { $eq: 'Tom' }, _value: 20.5 },
         { _name: { $ne: 'Jerry' } },
@@ -387,6 +461,29 @@ storiesOf('Query Builder', module).add('Final Query Builder', () =>
           type: 'performed',
           frequency: { type: '$within', days: 90 },
           query: { name: '_signin' }
+        }
+      ],
+      platforms: [
+        {
+          name: 'FOX+',
+          platform: 'Android',
+          value: true,
+          srcUrl:
+            'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+        },
+        {
+          name: 'FOX+',
+          platform: 'iOS',
+          value: true,
+          srcUrl:
+            'https://lh3.googleusercontent.com/drEZwJ4yRdrnNtPNx1xRMFequbJ8_ZhjgtvFk0ChY6V2cYMfej6f8HNgOgx_G4NBR74=w300'
+        },
+        {
+          name: 'FOX+',
+          platform: 'Web',
+          value: true,
+          srcUrl:
+            'http://sire-assets-fox.fichub.com/assets/fox/images/misc/apple-touch-icon.png?1501684406'
         }
       ]
     }}

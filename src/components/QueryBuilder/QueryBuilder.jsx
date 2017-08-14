@@ -6,7 +6,8 @@ import { action } from '@storybook/addon-actions';
 import { PropertyList, TestProperty } from '../PropertyList';
 import { EventList, TestEventList } from '../EventList';
 import { Select } from '../Select';
-import { TestPlatformMatch } from '../Platform';
+import { DumpTableComponent } from '../Table/tableResultComponent';
+import { PlatformMatch } from '../Platform';
 
 const options = [{ text: 'All', value: '$all' }, { text: 'Any', value: '$or' }];
 
@@ -15,73 +16,79 @@ const ControlledQueryBuilder = ({
   queries,
   groups,
   onChange,
-  onMatchChange,
   onAdd,
   onRemove,
   onPropertyNameChange,
+  onCheckAllPlatform,
+  onPlatformChange,
   style
 }) => {
   return (
-    <Grid celled="internally" fluid container>
-      <Grid.Row color="facebook">
-        <Grid.Column width={14}>
-          <div>
-            <span style={{ fontWeight: 'bolder', fontSize: 30 }}>
-              Query Builder
-            </span>
-          </div>
-        </Grid.Column>
-        <Grid.Column width={2}>
-          <Button
-            label="Bookmark"
-            icon="bookmark"
-            labelPosition="right"
-            floated
-            fluid
-            color="facebook"
-            onClick={action('Bookmark Clicked')}
-            style={{ width: 80 }}
-          />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row color="facebook">
-        <TestPlatformMatch
-          onChange={action('Platform Used Change')}
-          style={{}}
-        />
-      </Grid.Row>
-      <Grid.Row color="facebook">
-        <Grid.Column width={16}>
-          <div>
-            <PropertyList
-              queries={queries['profile_criteria']}
-              structure={structure}
-              groups={groups}
-              onChange={onChange}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onPropertyNameChange={onPropertyNameChange}
-              style={style}
+    <div>
+      <Grid celled="internally" fluid container>
+        <Grid.Row color="facebook">
+          <Grid.Column width={14}>
+            <div>
+              <span style={{ fontWeight: 'bolder', fontSize: 30 }}>
+                Query Builder
+              </span>
+            </div>
+          </Grid.Column>
+          <Grid.Column width={2}>
+            <Button
+              label="Bookmark"
+              icon="bookmark"
+              labelPosition="right"
+              floated
+              fluid
+              color="facebook"
+              onClick={action('Bookmark Clicked')}
+              style={{ width: 80 }}
             />
-          </div>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row color="facebook">
-        <Grid.Column floated="right" style={{ width: '230px' }}>
-          <Button
-            icon="repeat"
-            color="facebook"
-            content="Revert"
-            onClick={action('Revert Button Click')}
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row color="facebook">
+          <PlatformMatch
+            queries={queries['platforms']}
+            onChange={onCheckAllPlatform}
+            onPlatformChange={onPlatformChange}
+            style={{}}
           />
-          <Button
-            color="green"
-            content="Save"
-            onClick={action('Save Button Click')}
-          />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+        </Grid.Row>
+        <Grid.Row color="facebook">
+          <Grid.Column width={16}>
+            <div>
+              <PropertyList
+                queries={queries['profile_criteria']}
+                structure={structure}
+                groups={groups}
+                onChange={onChange}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                onPropertyNameChange={onPropertyNameChange}
+                style={style}
+              />
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row color="facebook">
+          <Grid.Column floated="right" style={{ width: '230px' }}>
+            <Button
+              icon="repeat"
+              color="facebook"
+              content="Revert"
+              onClick={action('Revert Button Click')}
+            />
+            <Button
+              color="green"
+              content="Save"
+              onClick={action('Save Button Click')}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      <DumpTableComponent queries={queries['platforms']} />
+    </div>
   );
 };
 
@@ -101,15 +108,6 @@ const control = WrappedComponent =>
         queries: this.props.queries
       };
     }
-
-    handleMatchChange = (e, data) => {
-      const newQueries = Object.assign(
-        {},
-        { ...this.state.queries },
-        { logical_criteria: data.value }
-      );
-      this.setState({ queries: newQueries });
-    };
 
     handleAdd = e => {
       let newQueries = this.state.queries['profile_criteria'].slice();
@@ -173,6 +171,31 @@ const control = WrappedComponent =>
       this.setState({ queries: newQueries });
     };
 
+    handleCheckAllPlatform = e => {
+      let subQueries = this.state.queries['platforms'].slice();
+      let newQueries = [];
+      Object.values(subQueries).map((query, index) => {
+        newQueries.push(Object.assign({}, { ...query }, { value: e.checked }));
+      });
+      newQueries = Object.assign(
+        {},
+        { ...this.state.queries },
+        { platforms: newQueries }
+      );
+      this.setState({ queries: newQueries });
+    };
+
+    handlePlatformChange = e => {
+      let newQueries = this.state.queries['platforms'].slice();
+      newQueries[e.index].value = e.checked;
+      newQueries = Object.assign(
+        {},
+        { ...this.state.queries },
+        { platforms: newQueries }
+      );
+      this.setState({ queries: newQueries });
+    };
+
     handleOptionChange = e => {
       let newQueries = this.state.queries['profile_criteria'].slice();
       const propName = Object.keys(newQueries[e.index])[0];
@@ -224,7 +247,8 @@ const control = WrappedComponent =>
           onRemove={this.handleRemove}
           onChange={this.handleOptionChange}
           onPropertyNameChange={this.handlePropertyNameChange}
-          onMatchChange={this.handleMatchChange}
+          onPlatformChange={this.handlePlatformChange}
+          onCheckAllPlatform={this.handleCheckAllPlatform}
         />
       );
     }

@@ -1,0 +1,18 @@
+.result{
+    width: 200px;
+}
+.cellEmphasis{
+    background: #425271 !important;
+    
+    color: white!important;
+    width: 300px !important;
+    
+    text-align: center !important;
+    border-right: 1px solid white;
+}
+.fixedTable{
+
+   bottom:0px;
+
+   position: fixed;
+}
